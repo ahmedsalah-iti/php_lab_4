@@ -120,6 +120,7 @@
         $_SESSION["name"] = $name;
         $_SESSION["email"] = $email;
         $_SESSION["room_number"] = $room_number;
+        $_SESSION['room_name'] = getRoomsArr($room_number)["name"];
         $_SESSION["ext"] = $ext;
         $_SESSION["profile_img"] = $profileImg;
         // $rowData ="";

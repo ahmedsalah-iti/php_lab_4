@@ -59,4 +59,51 @@
             return false;
         }
     }
+    function getDataByEmail_DB($email){
+        try{
+            if (isEmailFoundinDB($email)){
+                $user = pdo_select('user',array('email'=> $email),false);
+                if($user){
+                    return $user;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        } catch (Exception $e){
+            return false;
+        }
+
+    }
+    function isValidLogin_DB($email, $password){
+        $data = null;
+        $data = getDataByEmail_DB($email);
+        if($data){
+            if(password_verify($password, $data["password"])){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    
+    }
+    function updateProfileImgByEmail($email,$url){
+        // pdo_update("user", array("email" => "as@fb.com","name" =>"A S"),array("email" => "as@as.as"))
+        try{
+        if(isEmailFoundinDB($email)){
+            if (pdo_update("user",array("profile_img" => $url),array("email"=> $email))){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }catch (Exception $e){
+        return false;
+    }
+    }
 ?>

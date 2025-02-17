@@ -63,4 +63,48 @@ function isAssociative(array $arr): bool {
         throw new PDOException($e->getMessage(), (int)$e->getCode());
     }
     }
+//UPDATE table SET col = val where condition
+    function pdo_update($table, $columns_values, $conditions){
+        global $pdo;
+        try{
+            pdo_connect();
+            if ($table){
+                if (isAssociative($columns_values) && isAssociative(($conditions))){
+                    $q = "update $table SET ";
+                    foreach ($columns_values as $col => $v){
+                        $q .= "$col = :$col , ";
+                    }
+                    $q = rtrim($q,", ");
+                    $q .= " where ";
+                    foreach($conditions as $col => $v){
+                        $q .= "$col = :x$col AND ";
+                    }
+                    $q = rtrim($q,"AND ");
+                    // echo $q;
+                    $stmt = $pdo->prepare($q);
+                    $params = array_merge(
+                        $columns_values,
+                        array_combine(
+                            array_map(
+                                function($col){return ":x$col";},array_keys($conditions)
+                            ),
+                            array_values($conditions)
+                        )
+                        );
+                        // print_r($params);
+                    $stmt->execute($params);
+                    return $stmt->rowCount();
+                    
+                }else{  
+                    return -2;
+                }
+            }else{
+                return -3;
+            }
+        } catch(PDOException $e){
+            // throw new PDOException($e->getMessage(), (int)$e->getCode());
+            return -1;
+        }
+
+    }
 ?>

@@ -38,11 +38,14 @@
                     die();
                 }
 
-                if (isValidLogin($email, $password)){
-                    $userLoginData = getDataByEmail($email);
+                // if (isValidLogin($email, $password)){
+                if (isValidLogin_DB($email, $password)){
+                    // $userLoginData = getDataByEmail($email);
+                    $userLoginData = getDataByEmail_DB($email);
                     $_SESSION['email'] = $userLoginData['email'];
                     $_SESSION['name'] = $userLoginData['name'];
-                    $_SESSION['room_number'] = $userLoginData['room_number'];
+                    $_SESSION['room_number'] = $userLoginData['room_id'];
+                    $_SESSION['room_name'] = getRoomsArr($userLoginData['room_id'])["name"];
                     $_SESSION['ext'] = $userLoginData['ext'];
                     $_SESSION['profile_img'] = $userLoginData['profile_img'];
                     header('location: ?err=13&action='.$_GET["action"].'');
