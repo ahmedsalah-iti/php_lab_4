@@ -83,6 +83,10 @@
             $errMsg = "Error: internal error , couldn't register , contact with admin.";
             $type = false;
             break;
+            case 16:
+            $errMsg = "Success: profile image has been changed successfuly.";
+            $type = true;
+            break;
             default:
             $errMsg = "UNKNOWN_ERROR";
             $type = false;

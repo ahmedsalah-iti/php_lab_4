@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                 //update to db.
                 if(updateProfileImgByEmail($_SESSION['email'],$profileImg)){
                     $_SESSION['profile_img'] = $profileImg;
+                    header('location: ?err=16&action='.$_GET["action"].'');
                 }else{
                     header('location: ?err=8&action='.$_GET["action"].'');
                 }

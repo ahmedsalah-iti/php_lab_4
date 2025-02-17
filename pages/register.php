@@ -106,7 +106,17 @@
         //test
         // $_SESSION['GlobalFiles'] = $_FILES;
         if (isset($_FILES['profile_img']) && !empty($_FILES['profile_img'])){
-            uploadImg($_FILES['profile_img'],$profileImg);
+            if(uploadImg($_FILES['profile_img'],$profileImg)){
+                if(updateProfileImgByEmail($_SESSION['email'],$profileImg)){
+                    $_SESSION['profile_img'] = $profileImg;
+                }else{
+                    header('location: ?err=8&action='.$_GET["action"].'');
+                    die();
+                }
+            }else{
+                header('location: ?err=8&action='.$_GET["action"].'');
+            }
+            
         }
         
         
