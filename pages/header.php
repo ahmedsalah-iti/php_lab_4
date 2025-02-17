@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MySimpleWebsite</title>
     <style>
-        input{
+        input,select{
             padding: 1%;margin: auto;
 
         }

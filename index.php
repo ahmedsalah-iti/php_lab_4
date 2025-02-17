@@ -9,6 +9,8 @@ if (isset($_GET['err']) && !empty(($_GET['err']) && is_numeric($_GET['err']) )){
     include("./session.php");
     include("./functions.php");
     include("./pages/header.php");
+    include("./db_helper.php");
+    include("./db_logic.php");
     if (isset($_SESSION["email"]) && !empty($_SESSION["email"])){
         include("./pages/dashboard.php");
     }else{

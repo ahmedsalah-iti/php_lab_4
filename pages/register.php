@@ -10,7 +10,22 @@
     <br><br>
     <label>Confirm Password: <input type="password" name="confirm_password" style="width:100%"  ></label>
     <br><br>
-    <label>RoomNumber: <input type="number" name="room_number" style="width:100%"  ></label>
+    <!-- <label>RoomNumber: <input type="number" name="room_number" style="width:100%"  ></label> -->
+    <!-- <pre>
+<?php
+    $rooms = pdo_select("room");
+    print_r($rooms)
+    ?>
+    </pre> -->
+    <label>RoomNumber: 
+    <select name="room_number">
+        <?php
+            $options = "";
+            getRooms($options);
+            echo $options;
+        ?>
+    </select>
+    </label>
     <br><br>
     <label>Ext: <input type="number" name="ext" style="width:100%"  ></label>
     <br><br>
@@ -78,11 +93,15 @@
             header('location: ?err=5&action='.$_GET["action"].'');
             die();
         }
-        if (isEmailFound($email)){
+        // if (isEmailFound($email)){
+        //     header('location: ?err=10&action='.$_GET["action"].'');
+        //     die();
+        // }
+        // $password = password_hash($password, PASSWORD_DEFAULT);
+        if (isEmailFoundinDB($email)){
             header('location: ?err=10&action='.$_GET["action"].'');
             die();
         }
-        $password = password_hash($password, PASSWORD_DEFAULT);
         $profileImg = false;
         //test
         // $_SESSION['GlobalFiles'] = $_FILES;
@@ -91,21 +110,28 @@
         }
         
         
+        $newUserId = registerUser($email,$password,$name ,$room_number, $ext,$profileImg);
+        if (!$newUserId){
+            header('location: ?err=15&action='.$_GET["action"].'');
+            die();
+        }
+        
+        $_SESSION["id"] = $newUserId;
         $_SESSION["name"] = $name;
         $_SESSION["email"] = $email;
         $_SESSION["room_number"] = $room_number;
         $_SESSION["ext"] = $ext;
         $_SESSION["profile_img"] = $profileImg;
-        $rowData ="";
-        myConcat($rowData,$email);
-        myConcat($rowData,$password);
-        myConcat($rowData,$name);
-        myConcat($rowData,$room_number);
-        myConcat($rowData,$ext);
-        myConcat($rowData,$profileImg);
+        // $rowData ="";
+        // myConcat($rowData,$email);
+        // myConcat($rowData,$password_hash($password, PASSWORD_DEFAULT));
+        // myConcat($rowData,$name);
+        // myConcat($rowData,$room_number);
+        // myConcat($rowData,$ext);
+        // myConcat($rowData,$profileImg);
         
 
-        saveToFile($rowData);
+        //saveToFile($rowData);
         header("location: ?err=12");
         
     

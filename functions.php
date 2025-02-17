@@ -79,6 +79,10 @@
             $errMsg = "Error: Email/Password is/are incorrect.";
             $type = false;
             break;
+            case 15:
+            $errMsg = "Error: internal error , couldn't register , contact with admin.";
+            $type = false;
+            break;
             default:
             $errMsg = "UNKNOWN_ERROR";
             $type = false;
