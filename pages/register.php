@@ -121,7 +121,7 @@
         
         
         $newUserId = registerUser($email,$password,$name ,$room_number, $ext,$profileImg);
-        if (!$newUserId){
+        if (!$newUserId || $newUserId <= 0){
             header('location: ?err=15&action='.$_GET["action"].'');
             die();
         }
